@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+       default-autowire="byName">
+
+    <!-- properties -->
+    <bean class="com.pingcap.tools.cdb.binlog.instance.spring.support.PropertyPlaceholderConfigurer" lazy-init="false">
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+        <property name="locationNames">
+            <list>
+                <value>classpath:cdb-binlog.properties</value>
+                <value>classpath:${cdb.instance.destination:example}/instance.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="socketAddressEditor" class="com.pingcap.tools.cdb.binlog.instance.spring.support.SocketAddressEditor"/>
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="propertyEditorRegistrars">
+            <list>
+                <ref bean="socketAddressEditor"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="instance" class="com.pingcap.tools.cdb.binlog.instance.spring.CDBInstanceWithSpring">
+        <property name="destination" value="${cdb.instance.destination}"/>
+    </bean>
+</beans>
