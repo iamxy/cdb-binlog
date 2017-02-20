@@ -94,7 +94,7 @@ public class CDBServerWithEmbedded extends AbstractCDBLifeCycle implements CDBSe
         return cdbInstances.containsKey(destination) && cdbInstances.get(destination).isStart();
     }
 
-    public void setCDBInstanceGenerator(CDBInstanceGenerator canalInstanceGenerator) {
+    public void setCDBInstanceGenerator(CDBInstanceGenerator cdbInstanceGenerator) {
         this.cdbInstanceGenerator = cdbInstanceGenerator;
     }
 }
