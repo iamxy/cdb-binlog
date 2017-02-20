@@ -1,6 +1,7 @@
 package com.pingcap.tools.cdb.binlog.instance.spring;
 
 import com.pingcap.tools.cdb.binlog.instance.core.AbstractCDBInstance;
+import com.pingcap.tools.cdb.binlog.listener.CDBEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,5 +15,9 @@ public class CDBInstanceWithSpring extends AbstractCDBInstance {
     public void start() {
         logger.info("start CDB Instance for {}-{} ", new Object[]{1, destination});
         super.start();
+    }
+
+    public void setCDBEventListener(CDBEventListener eventListener) {
+        this.eventListener = eventListener;
     }
 }

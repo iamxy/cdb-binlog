@@ -1,6 +1,7 @@
 package com.pingcap.tools.cdb.binlog.instance.core;
 
 import com.pingcap.tools.cdb.binlog.common.AbstractCDBLifeCycle;
+import com.pingcap.tools.cdb.binlog.listener.CDBEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,8 +11,9 @@ import org.slf4j.LoggerFactory;
 public class AbstractCDBInstance extends AbstractCDBLifeCycle implements CDBInstance {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractCDBInstance.class);
-    protected String destination;
 
+    protected String destination;
+    protected CDBEventListener eventListener;
 
     @Override
     public void start() {
@@ -26,5 +28,10 @@ public class AbstractCDBInstance extends AbstractCDBLifeCycle implements CDBInst
     @Override
     public String getDestination() {
         return destination;
+    }
+
+    @Override
+    public CDBEventListener getEventListener() {
+        return eventListener;
     }
 }
