@@ -13,7 +13,9 @@ public class CDBFile {
     public static String curentBinlogFile;
     public static long pos = 0;
 
-    // private static config = CDBConfig();
+    private static String cfgDir;
+    private static String cfgBinlogFilePrefix;
+    private static int cfgMaxSize;
 
     static {
         initCurrentBinlogFile();
@@ -61,6 +63,10 @@ public class CDBFile {
     }
 
     private static void initCurrentBinlogFile() {
+        CDBConfig config = new CDBConfig();
+        cfgDir = config.getDir();
+        cfgBinlogFilePrefix = config.getBinlogFilePrefix();
+        cfgMaxSize = config.getMaxSize();
         if(cfgBinlogFilePrefix != "") {
             binglogFilePre = cfgBinlogFilePrefix;
         }
@@ -80,8 +86,5 @@ public class CDBFile {
             }
         }
         curentBinlogFile = binglogFilePre+String.format("%08d", currentNum);
-    }
-
-
     }
 }

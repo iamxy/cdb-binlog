@@ -5,6 +5,7 @@ import com.pingcap.tools.cdb.binlog.listener.CDBEventListener;
 import com.qcloud.dts.context.SubscribeContext;
 import com.qcloud.dts.message.ClusterMessage;
 import com.qcloud.dts.message.DataMessage;
+import com.qcloud.dts.message.DataMessage.Record.Type;
 import com.qcloud.dts.subscribe.ClusterListener;
 import com.qcloud.dts.subscribe.DefaultSubscribeClient;
 import com.qcloud.dts.subscribe.SubscribeClient;
@@ -27,9 +28,6 @@ public class CDBMySQLEventListener extends AbstractCDBLifeCycle implements CDBEv
     private String secretId;
     private String secretKey;
     private String guid;
-    /*private int last;
-    private long startTime = System.currentTimeMillis();
-    private int count = 0;*/
 
     private SubscribeClient client;
 
@@ -86,28 +84,22 @@ public class CDBMySQLEventListener extends AbstractCDBLifeCycle implements CDBEv
 
     public void handleMessage(DataMessage.Record record) {
         // TODO: handle message process
-        // System.out.printf("# DataMessage.Record: %s\n", record.getCheckpoint());
-   /*     String[] ch = record.getCheckpoint().split("@");
-        int chInt = Integer.parseInt(ch[2]);
-        if(chInt < last) {
-            System.out.println("Error offset is small than last");
-        } else {
-            last = chInt;
-        }
-        count++;
-        if (count >= 800000) {
-            long endTime = System.currentTimeMillis();
-            System.out.println(800000/((endTime-startTime)/1000));
-            System.out.println(startTime);
-            System.out.println(endTime);
-            System.exit(0);
-        }*/
 
-        /*try {
+        CDBMessageHandler handler = new CDBMessageHandler();
+        Type recordType = record.getOpt();
+        System.out.println(record.getCheckpoint());
+         try {
             Thread.sleep(500);
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
+        if(recordType == Type.UPDATE || recordType == Type.INSERT
+                || recordType == Type.DELETE || recordType == Type.DDL) {
+            handler.handle(record);
+        }else {
+             System.out.println("type is wrong");
+             System.out.println(recordType.value());
+        }
     }
 
     public void setDestination(String destination) {
