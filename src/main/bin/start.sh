@@ -10,7 +10,7 @@ case "`uname`" in
 		;;
 esac
 base=${bin_abs_path}/..
-cdb_conf=$base/conf/cdb-binog.properties
+cdb_conf=$base/conf/cdb-binlog.properties
 logback_configurationFile=$base/conf/logback.xml
 export LANG=en_US.UTF-8
 export BASE=$base
