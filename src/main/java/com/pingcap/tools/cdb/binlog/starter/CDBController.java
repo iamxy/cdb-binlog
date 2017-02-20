@@ -224,6 +224,9 @@ public class CDBController {
         }
 
         logger.info("## cdb-binlog server has started!");
+        while (true) {
+            Thread.sleep(10000);
+        }
     }
 
     public void stop() throws Throwable {

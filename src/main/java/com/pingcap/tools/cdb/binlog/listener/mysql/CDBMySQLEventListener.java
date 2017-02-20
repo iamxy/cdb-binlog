@@ -82,6 +82,12 @@ public class CDBMySQLEventListener extends AbstractCDBLifeCycle implements CDBEv
 
     public void handleMessage(DataMessage.Record record) {
         // TODO: handle message process
+        System.out.printf("# DataMessage.Record: %s \n", record.toString());
+        try {
+            Thread.sleep(500);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void setDestination(String destination) {

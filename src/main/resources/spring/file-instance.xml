@@ -32,7 +32,7 @@
         </property>
     </bean>
 
-    <bean id="eventListener" class="om.pingcap.tools.cdb.binlog.listener.mysql.CDBMySQLEventListener">
+    <bean id="eventListener" class="com.pingcap.tools.cdb.binlog.listener.mysql.CDBMySQLEventListener">
         <property name="destination" value="${cdb.instance.destination}"/>
         <property name="serviceIp" value="${cdb.instance.service.ip}"/>
         <property name="servicePort" value="${cdb.instance.service.port}"/>

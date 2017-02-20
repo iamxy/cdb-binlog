@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by iamxy on 2017/2/17.
  */
-public class AbstractCDBInstance extends AbstractCDBLifeCycle implements CDBInstance {
+public abstract class AbstractCDBInstance extends AbstractCDBLifeCycle implements CDBInstance {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractCDBInstance.class);
 
@@ -17,12 +17,12 @@ public class AbstractCDBInstance extends AbstractCDBLifeCycle implements CDBInst
 
     @Override
     public void start() {
-
+        super.start();
     }
 
     @Override
     public void stop() {
-
+        super.stop();
     }
 
     @Override
