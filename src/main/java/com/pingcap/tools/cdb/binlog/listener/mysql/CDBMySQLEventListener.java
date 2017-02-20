@@ -11,6 +11,7 @@ import com.qcloud.dts.subscribe.SubscribeClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 import java.util.List;
 
 /**
@@ -26,6 +27,9 @@ public class CDBMySQLEventListener extends AbstractCDBLifeCycle implements CDBEv
     private String secretId;
     private String secretKey;
     private String guid;
+    /*private int last;
+    private long startTime = System.currentTimeMillis();
+    private int count = 0;*/
 
     private SubscribeClient client;
 
@@ -82,12 +86,28 @@ public class CDBMySQLEventListener extends AbstractCDBLifeCycle implements CDBEv
 
     public void handleMessage(DataMessage.Record record) {
         // TODO: handle message process
-        System.out.printf("# DataMessage.Record: %s \n", record.toString());
-        try {
+        // System.out.printf("# DataMessage.Record: %s\n", record.getCheckpoint());
+   /*     String[] ch = record.getCheckpoint().split("@");
+        int chInt = Integer.parseInt(ch[2]);
+        if(chInt < last) {
+            System.out.println("Error offset is small than last");
+        } else {
+            last = chInt;
+        }
+        count++;
+        if (count >= 800000) {
+            long endTime = System.currentTimeMillis();
+            System.out.println(800000/((endTime-startTime)/1000));
+            System.out.println(startTime);
+            System.out.println(endTime);
+            System.exit(0);
+        }*/
+
+        /*try {
             Thread.sleep(500);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public void setDestination(String destination) {
