@@ -97,7 +97,6 @@ public class CDBMySQLEventListener extends AbstractCDBLifeCycle implements CDBEv
                 || recordType == Type.DELETE || recordType == Type.DDL) {
             handler.handle(record);
         }else {
-             System.out.println("type is wrong");
              System.out.println(recordType.value());
         }
     }
