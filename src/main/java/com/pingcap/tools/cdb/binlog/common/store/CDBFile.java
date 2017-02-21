@@ -9,8 +9,8 @@ import java.io.FileOutputStream;
  * Created by cwen on 2017/2/20.
  */
 public class CDBFile {
-    public static String binglogFilePre = "binlog-";
-    public static String curentBinlogFile;
+    public static String binlogFilePre = "binlog-";
+    public static String currentBinlogFile;
     public static long pos = 0;
 
     private static String cfgDir;
@@ -23,20 +23,20 @@ public class CDBFile {
 
     public static void writeToFile(Binlog.Builder binlog){
         try {
-            File file = new File(cfgDir + "/" + curentBinlogFile);
+            File file = new File(cfgDir + "/" + currentBinlogFile);
             if(!file.exists()) {
                 file.createNewFile();
             }
             if(file.length()+binlog.toString().length() >= cfgMaxSize) {
                 String fileName = file.getName();
-                String numStr = fileName.replaceFirst(binglogFilePre, "");
+                String numStr = fileName.replaceFirst(binlogFilePre, "");
                 int nextNum = Integer.parseInt(numStr) + 1;
-                String newFileName = binglogFilePre+String.format("%08d", nextNum);
+                String newFileName = binlogFilePre+String.format("%08d", nextNum);
                 file = new File(cfgMaxSize + "/" + newFileName);
                 if(!file.exists()) {
                     file.createNewFile();
                 }
-                curentBinlogFile = newFileName;
+                currentBinlogFile = newFileName;
                 FileOutputStream output = new FileOutputStream(file, true);
                 try {
                     int binlogLen = binlog.build().toByteArray().length;
@@ -58,8 +58,8 @@ public class CDBFile {
         return pos;
     }
 
-    public static String getCurentBinlogFile() {
-        return curentBinlogFile;
+    public static String getCurrentBinlogFile() {
+        return currentBinlogFile;
     }
 
     private static void initCurrentBinlogFile() {
@@ -68,7 +68,7 @@ public class CDBFile {
         cfgBinlogFilePrefix = config.getBinlogFilePrefix();
         cfgMaxSize = config.getMaxSize();
         if(cfgBinlogFilePrefix != "") {
-            binglogFilePre = cfgBinlogFilePrefix;
+            binlogFilePre = cfgBinlogFilePrefix;
         }
         File file = new File(cfgDir);
         File[] array = file.listFiles();
@@ -77,7 +77,7 @@ public class CDBFile {
             for(int i = 0; i < array.length; i++) {
                 if(array[i].isFile()) {
                     String fileName = array[i].getName();
-                    String numStr = fileName.replaceFirst(binglogFilePre, "");
+                    String numStr = fileName.replaceFirst(binlogFilePre, "");
                     int tmpNum = Integer.parseInt(numStr);
                     if (tmpNum > currentNum) {
                         currentNum = tmpNum;
@@ -85,6 +85,6 @@ public class CDBFile {
                 }
             }
         }
-        curentBinlogFile = binglogFilePre+String.format("%08d", currentNum);
+        currentBinlogFile = binlogFilePre+String.format("%08d", currentNum);
     }
 }

@@ -57,7 +57,7 @@ public class CDBMessageHandler {
                 binlog.setPrimaryKey(i, row);
             }
             Pos.Builder pos = Pos.newBuilder();
-            pos.setBinlogFile(CDBFile.getCurentBinlogFile());
+            pos.setBinlogFile(CDBFile.getCurrentBinlogFile());
             pos.setPos(CDBFile.getPos());
             binlog.setPostion(pos);
             binlog.setDbName(data.getDbName());
