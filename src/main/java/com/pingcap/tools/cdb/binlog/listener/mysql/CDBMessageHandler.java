@@ -47,14 +47,14 @@ public class CDBMessageHandler {
                 row.setColumnName(data.getColumns().get(i));
                 row.setColumnValue(data.getValues().get(i));
                 row.setSql(data.getValues().get(i));
-                binlog.setRows(i, row);
+                binlog.addRows(i, row);
             }
 
             for(int i = 0; i < data.getPrimaryKey().size(); i++) {
                 Row.Builder row = Row.newBuilder();
                 row.setColumnName(data.getPrimaryKey().get(i));
                 row.setColumnValue(data.getPrimaryValue().get(i));
-                binlog.setPrimaryKey(i, row);
+                binlog.addPrimaryKey(i, row);
             }
             Pos.Builder pos = Pos.newBuilder();
             pos.setBinlogFile(CDBFile.getCurrentBinlogFile());

@@ -9,14 +9,16 @@ import java.nio.ByteBuffer;
 public class CDBByte {
     private static ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
 
-    public static byte[] intToBytes(int x) {
-        buffer.putInt(0, x);
+    public static byte[] longToBytes(long x) {
+        ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+        buffer.putLong(0, x);
         return buffer.array();
     }
 
-    public static long bytesToInt(byte[] bytes) {
-        buffer.put(bytes, 0, bytes.length);
+    public static long bytesToLong(byte[] bytes) {
+        ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+        buffer.put(bytes);
         buffer.flip();//need flip
-        return buffer.getInt();
+        return buffer.getLong();
     }
 }

@@ -39,11 +39,8 @@
         <property name="secretId" value="${cdb.instance.secret.id}"/>
         <property name="secretKey" value="${cdb.instance.secret.key}"/>
         <property name="guid" value="${cdb.instance.guid}"/>
+        <property name="cfgDir" value="${cdb.instance.output.data.dir}"/>
+        <property name="cfgBinlogFilePrefix" value="${cdb.instance.output.data.binlogFilePrefix}"/>
+        <property name="cfgMaxSize" value="${cdb.instance.output.data.maxSize}"/>
      </bean>
-
-    <bean id="cdbConfig" class="com.pingcap.tools.cdb.binlog.instance.CDBConfig" >
-        <property name="dir" value="${cdb.instance.output.data.dir}"/>
-        <property name="binlogFilePrefix" value="${cdb.instance.output.data.binlogFilePrefix}"/>
-        <property name="maxSize" value="${cdb.instance.output.data.maxSize}"/>
-    </bean>
 </beans>

@@ -12,6 +12,8 @@ import com.qcloud.dts.subscribe.SubscribeClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pingcap.tools.cdb.binlog.common.store.CDBFile;
+
 
 import java.util.List;
 
@@ -28,6 +30,9 @@ public class CDBMySQLEventListener extends AbstractCDBLifeCycle implements CDBEv
     private String secretId;
     private String secretKey;
     private String guid;
+    private String cfgDir;
+    private String cfgBinlogFilePrefix;
+    private int cfgMaxSize;
 
     private SubscribeClient client;
 
@@ -38,7 +43,7 @@ public class CDBMySQLEventListener extends AbstractCDBLifeCycle implements CDBEv
         context.setSecretKey(secretKey);
         context.setServiceIp(serviceIp);
         context.setServicePort(servicePort);
-
+        CDBFile.initCurrentBinlogFile(cfgDir, cfgBinlogFilePrefix, cfgMaxSize);
         try {
             this.client = new DefaultSubscribeClient(context);
         } catch (Exception e) {
@@ -71,6 +76,7 @@ public class CDBMySQLEventListener extends AbstractCDBLifeCycle implements CDBEv
         } catch(Exception e) {
             logger.error("# start listener failed", e);
         }
+
     }
 
     @Override
@@ -81,7 +87,6 @@ public class CDBMySQLEventListener extends AbstractCDBLifeCycle implements CDBEv
             logger.error("# stop listener failed", e);
         }
     }
-
     public void handleMessage(DataMessage.Record record) {
         // TODO: handle message process
 
@@ -96,8 +101,6 @@ public class CDBMySQLEventListener extends AbstractCDBLifeCycle implements CDBEv
         if(recordType == Type.UPDATE || recordType == Type.INSERT
                 || recordType == Type.DELETE || recordType == Type.DDL) {
             handler.handle(record);
-        }else {
-             System.out.println(recordType.value());
         }
     }
 
@@ -123,5 +126,17 @@ public class CDBMySQLEventListener extends AbstractCDBLifeCycle implements CDBEv
 
     public void setGuid(String guid) {
         this.guid = guid;
+    }
+
+    public void setCfgDir(String cfgDir) {
+        this.cfgDir = cfgDir;
+    }
+
+    public void setCfgBinlogFilePrefix(String cfgBinlogFilePrefix) {
+        this.cfgBinlogFilePrefix = cfgBinlogFilePrefix;
+    }
+
+    public void setCfgMaxSize(int cfgMaxSize) {
+        this.cfgMaxSize = cfgMaxSize;
     }
 }
